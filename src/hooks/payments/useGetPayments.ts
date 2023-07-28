@@ -4,7 +4,7 @@ import { get } from "@src/util/request";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
-type PaymentWithCategory = Payment & { category: Category };
+type PaymentWithCategory = Payment & { category: Category, date: string };
 
 export default function useGetPayments(){
     const queryClient = useQueryClient();

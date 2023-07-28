@@ -5,6 +5,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
 import { fredoka } from '@styles/fonts'
 import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import Navbar from '@src/components/Navbar'
 
 
 const queryClient = new QueryClient({

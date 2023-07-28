@@ -1,3 +1,5 @@
+import prisma from "@src/lib/prisma";
+import handleErrorResult from "@src/util/serverside/errorresulthandler";
 import isReqInvalid from "@src/util/serverside/validators";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -9,9 +11,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 }
 
-function addPayment(req: NextApiRequest, res: NextApiResponse) {
+async function addPayment(req: NextApiRequest, res: NextApiResponse) {
     if (isReqInvalid(req, res, [
         {key: 'amount', type: 'number', dict: 'body'},
         {key: 'categoryId', type: 'number', dict: 'body'},
     ])) return;
+
+    try {
+        const result = await prisma.payment.create({
+            data: {
+                amount: parseInt(req.body.amount),
+                categoryId: parseInt(req.body.categoryId),
+                note: req.body.note,
+            },
+        });
+        res.status(200).json(result);
+    } catch (e) {
+        handleErrorResult(res, e, "Something went wrong while adding payment.");
+    }
 }

@@ -34,7 +34,7 @@ export default function useCreatePaymentButton() {
 
     const createButton = (
         <button id="create-payment-modal-button"
-            className={`flex outline-none focus:outline-none group rounded-md bg-green px-3 font-bold text-lg mt-2 text-white items-center relative overflow-hidden`}
+            className={`flex outline-none focus:outline-none group rounded-md bg-green px-3 font-bold text-lg text-white items-center relative overflow-hidden`}
             onClick={() => setShowCreateModal(true)}>
             <span className="pr-1 font-semibold flex-1">
                 New Payment <FontAwesomeIcon icon={faPlus} />
@@ -45,6 +45,7 @@ export default function useCreatePaymentButton() {
     const { register, handleSubmit, watch, formState: { errors }, reset, setFocus } = useForm<CreatePaymentModel>();
 
     const onSubmit = async (data: CreatePaymentModel) => {
+        data.amount = data.amount * 100;    // convert to cents
         createPayment(data);
         setShowCreateModal(false)
         reset();
@@ -61,22 +62,25 @@ export default function useCreatePaymentButton() {
                         {...register("amount")}
                         className="rounded-md w-full outline focus:outline-blue  p-2 text-dark-blue"
                         placeholder="Amount"
-                        type="number" />
+                        type="number"
+                        step={0.01} />
                     {errors.amount && <Warning>{getErrorMessage(errors.amount.type)}</Warning>}
                 </div>
 
-                <select {...register("categoryId")}>
+                <select {...register("categoryId")}
+                    className="mr-3">
                     {categories.map((category) => (
                         <option key={category.categoryId} value={category.categoryId}>{category.name}</option>
                     ))}
                 </select>
+                <label htmlFor="categoryId">Category</label>
 
                 <div className="mb-3">
                     <h3 className="mb-2 text-dark-blue">Note</h3>
                     <input
                         {...register("note", noteValidation)}
                         className="rounded-md w-full outline focus:outline-blue  p-2 text-dark-blue"
-                        placeholder="Payment Name"
+                        placeholder="More info"
                         type="text" />
                     {errors.note && <Warning>{getErrorMessage(errors.note.type, noteValidation)}</Warning>}
                 </div>

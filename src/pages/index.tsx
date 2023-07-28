@@ -37,7 +37,7 @@ export default function Home() {
     return (
         <section className="w-5/6 mx-auto min-h-screen pt-14">
             <h2 className="inline text-blue text-4xl h-6">Categories</h2>
-            <div className="p-3 flex justify-around">{createButton} {selectMonths}</div>
+            <div className="p-3 flex justify-between items-center">{createButton} {selectMonths}</div>
             {paymentList}
             {createPaymentFormModal}
             {errorComponent}

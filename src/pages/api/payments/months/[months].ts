@@ -17,11 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     try {
-        if (months === 0) {
-            res.status(200).json(await prisma.payment.findMany());
-            return;
-        }
-    
+
         const payments = await getPaymentsFromMonths(months);
     
         res.status(200).json(payments);
