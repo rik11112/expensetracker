@@ -1,0 +1,230 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+$title-font: var(--fredoka-default);
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--secondary) var(--primary);
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 15px;
+}
+
+*::-webkit-scrollbar-track {
+    background: var(--primary);
+    border-radius: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: var(--secondary);
+    border-radius: 14px;
+    border: 3px solid var(--primary);
+}
+
+:root {
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 214, 219, 220;
+    --background-end-rgb: 255, 255, 255;
+
+    /*colors from figma*/
+    --black: #38303A;
+    --darker-gray: #6F6871;
+    --dark-gray: #A497A7;
+    --gray: #C1B6C3;
+    --light-gray: #DFD7E1;
+    --lighter-gray: #F2EEF3;
+    --white: #FFFFFF;
+    --dark-blue: #5A5781;
+    --blue: #736CED;
+    --light-blue: #E3E2FB;
+    --yellow: #FAAF3A;
+    --light-yellow: #FFF7EC;
+    --green: #21B573;
+    --light-green: #E9F8F1;
+    --red: #eb2416;
+
+    /*fonts from figma*/
+    /*titles font*/
+    --title-font: $title-font;
+
+    /*text font*/
+    --text-font: 'Noto Sans', sans-serif;
+}
+
+body {
+    overflow-x: hidden;
+    background: var(--lighter-gray);
+    height: auto;
+}
+
+body p {
+    font-family: var(--text-font);
+    letter-spacing: 0.05em;
+    font-weight: normal;
+}
+
+* {
+    font-family: $title-font;
+    font-weight: bolder;
+    scrollbar-width: thin;
+    scrollbar-color: var(--green) var(--lighter-gray);
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 15px;
+}
+
+*::-webkit-scrollbar-track {
+    background: var(--lighter-gray);
+    border-radius: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: var(--green);
+    border-radius: 14px;
+    border: 3px solid var(--lighter-gray);
+}
+
+*::-webkit-scrollbar-corner {
+    background-color: transparent;
+}
+
+.max-content-width {
+    max-width: 1600px;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.bar-shadow {
+    -webkit-box-shadow: 0px 4px 4px 0px rgba(193, 182, 195, 1);
+    -moz-box-shadow: 0px 4px 4px 0px rgba(193, 182, 195, 1);
+    box-shadow: 0px 4px 4px 0px rgba(193, 182, 195, 1);
+}
+
+.draggableContainer {
+    user-select: none;
+}
+
+.draggable {
+    cursor: grab;
+}
+
+.dragging {
+    cursor: grabbing;
+    font-family: var(--text-font);
+    opacity: 0.7;
+}
+
+.shadow-text {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.multi-shadow-text {
+    text-shadow:
+        0.07em 0 black,
+        0 0.07em black,
+        -0.07em 0 black,
+        0 -0.07em black;
+}
+
+@layer base {
+    .text-light-gray {
+        color: var(--light-gray);
+    }
+
+    .text-gray {
+        color: var(--gray);
+    }
+
+    .text-dark-blue {
+        color: var(--dark-blue);
+    }
+
+    .text-blue {
+        color: var(--blue);
+    }
+
+    .text-black {
+        color: var(--black);
+    }
+
+    .text-green {
+        color: var(--green);
+    }
+
+    .text-white {
+        color: var(--white);
+    }
+
+    .text-yellow {
+        color: var(--yellow);
+    }
+
+    .text-red {
+        color: var(--red);
+    }
+
+    .bg-lighter-gray {
+        background-color: var(--lighter-gray);
+    }
+
+    .bg-light-gray {
+        background-color: var(--light-gray);
+    }
+
+    .bg-light-blue {
+        background-color: var(--light-blue);
+    }
+
+    .bg-blue {
+        background-color: var(--blue);
+    }
+
+    .bg-green {
+        background-color: var(--green);
+    }
+
+    .bg-light-green {
+        background-color: var(--light-green);
+    }
+
+    .bg-yellow {
+        background-color: var(--yellow);
+    }
+
+    .bg-red {
+        background-color: var(--red);
+    }
+
+    .outline-blue {
+        outline: 3px solid var(--blue);
+    }
+
+    .outline-light-gray {
+        outline: 3px solid var(--light-gray);
+    }
+
+    .border-blue {
+        border-color: var(--blue);
+    }
+
+    .border-green {
+        border-color: var(--green);
+    }
+
+    .border-light-blue {
+        border-color: var(--light-blue);
+    }
+
+
+
+
+
+
+
+}

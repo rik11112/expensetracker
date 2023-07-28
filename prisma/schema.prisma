@@ -1,0 +1,27 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider     = "mysql"
+    url          = env("DATABASE_URL")
+    relationMode = "prisma"
+}
+
+model Category {
+    categoryId Int       @id @default(autoincrement())
+    name       String
+    color      String
+    payments   Payment[]
+}
+
+model Payment {
+    paymentId  Int      @id @default(autoincrement())
+    date       DateTime @default(now())
+    amount     Int
+    note       String?
+    categoryId Int
+    category   Category @relation(fields: [categoryId], references: [categoryId])
+
+    @@index([categoryId])
+}
