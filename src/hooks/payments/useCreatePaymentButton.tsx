@@ -68,7 +68,7 @@ export default function useCreatePaymentButton() {
                 </div>
 
                 <select {...register("categoryId")}
-                    className="mr-3">
+                    className="mr-3 rounded-lg">
                     {categories.map((category) => (
                         <option key={category.categoryId} value={category.categoryId}>{category.name}</option>
                     ))}
