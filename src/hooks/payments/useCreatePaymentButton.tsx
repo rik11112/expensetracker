@@ -17,6 +17,9 @@ export default function useCreatePaymentButton() {
         isCreatePaymentLoading,
     } = useCreatePayment()
     const [showCreateModal, setShowCreateModal] = useState(false);
+    const [isReceiving, setIsReceiving] = useState(false);
+    const switchText = isReceiving ? 'Received' : 'Spent';
+    const switchTextColor = isReceiving ? 'text-green-500' : 'text-red-500';
 
     const {
         categories,
@@ -46,6 +49,9 @@ export default function useCreatePaymentButton() {
 
     const onSubmit = async (data: CreatePaymentModel) => {
         data.amount = data.amount * 100;    // convert to cents
+        if (!isReceiving) {
+            data.amount = -data.amount;
+        }
         createPayment(data);
         setShowCreateModal(false)
         reset();
@@ -65,6 +71,14 @@ export default function useCreatePaymentButton() {
                         type="number"
                         step={0.01} />
                     {errors.amount && <Warning>{getErrorMessage(errors.amount.type)}</Warning>}
+                </div>
+
+                <div className="my-3">
+                    <label className={`switch`}>
+                        <input type="checkbox" onChange={e => setIsReceiving(e.target.checked)} />
+                        <span className="slider round"></span>
+                    </label>
+                    <span className={`ml-3 font-semibold ${switchTextColor}`}>{switchText}</span>
                 </div>
 
                 <select {...register("categoryId")}
