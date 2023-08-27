@@ -1,10 +1,10 @@
+import Navbar from "@src/components/Navbar"
 import displayPayments from "@src/components/payments/displayPayments"
 import useCreatePaymentButton from "@src/hooks/payments/useCreatePaymentButton"
 import prisma from "@src/lib/prisma"
 import { getPaymentsFromMonths } from "@src/services/serverside/serversidefetching"
 import { getCategories, getPayments } from "@src/services/services"
 import { QueryClient, dehydrate, useQueryClient } from "@tanstack/react-query"
-import { Navbar } from "flowbite-react"
 import { GetServerSidePropsContext } from "next"
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
@@ -26,6 +26,7 @@ export default function Home() {
     const {
         selectMonths,
         paymentList,
+        downloadButton,
     } = displayPayments();
 
     const {
@@ -36,13 +37,16 @@ export default function Home() {
 
 
     return <>
-        <Navbar />
-        <section className="w-5/6 mx-auto min-h-screen pt-14">
+        <Navbar currentPage="home" />
+        <section className="w-5/6 mx-auto min-h-fit pt-7">
             <h2 className="inline text-blue text-4xl h-6">Payments</h2>
             <div className="p-3 flex justify-between items-center">{createButton} {selectMonths}</div>
             {paymentList}
             {createPaymentFormModal}
             {errorComponent}
+            <div className="absolute right-5 top-24">
+                {downloadButton}
+            </div>
         </section>
     </>
 }

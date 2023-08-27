@@ -2,7 +2,7 @@
 
 import { Navbar } from 'flowbite-react';
 
-export default function DefaultNavbar() {
+export default function DefaultNavbar({ currentPage }: { currentPage: string }) {
     return (
         <Navbar
             fluid
@@ -13,11 +13,13 @@ export default function DefaultNavbar() {
             <Navbar.Collapse>
                 <Navbar.Link
                     href="/"
+                    active={currentPage === 'home'}
                 >
                     Payments
                 </Navbar.Link>
                 <Navbar.Link
                     href="/categories"
+                    active={currentPage === 'categories'}
                 >
                     Categories
                 </Navbar.Link>

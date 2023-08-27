@@ -23,6 +23,9 @@ export async function getPaymentsFromMonths(months: number) {
         include: {
             category: true,
         },
+        orderBy: {
+            date: "desc", // Change to "desc" for descending order
+        },
     });
     payments.forEach(payment => {
         // @ts-ignore

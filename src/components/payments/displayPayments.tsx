@@ -1,4 +1,7 @@
+import { faDownload } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useGetPayments from "@src/hooks/payments/useGetPayments"
+import { LegacyRef, useEffect, useRef } from "react";
 
 
 export default function displayPayments() {
@@ -10,9 +13,10 @@ export default function displayPayments() {
         fetchStatus,
         changeMonths,
     } = useGetPayments();
+    const months = useRef<HTMLSelectElement>(null);
 
     const selectMonths = (
-        <select className="border border-gray-300 rounded-md p-1" onChange={e => changeMonths(parseInt(e.target.value))}>
+        <select ref={months} className="border border-gray-300 rounded-md p-1" onChange={e => changeMonths(parseInt(e.target.value))}>
             <option value="1">1 month</option>
             <option value="2">2 months</option>
             <option value="3">3 months</option>
@@ -40,8 +44,20 @@ export default function displayPayments() {
         )
     })
 
+    const downloadButton = (
+        <a
+            className="flex outline-none focus:outline-none group rounded-md bg-green px-3 font-bold text-lg text-white items-center relative overflow-hidden"
+            href={`/api/download/${months.current?.value}`}
+        >
+            <span className="pr-1 font-semibold flex-1">
+                <FontAwesomeIcon icon={faDownload} />
+            </span>
+        </a>
+    )
+
     return {
         selectMonths,
         paymentList,
+        downloadButton,
     }
 }
