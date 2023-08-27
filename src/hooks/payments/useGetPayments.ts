@@ -17,13 +17,13 @@ export default function useGetPayments(){
         data: payments,
         fetchStatus,
     } = useQuery<PaymentWithCategory[], Error>({
-        queryKey: ['payments'],
+        queryKey: ['payments', months],
         queryFn: () => getPayments(months),
     });
 
-    const changeMonths = (months: number) => {
-        setMonths(months);
-        queryClient.invalidateQueries(['payments']);
+    const changeMonths = (newMonths: number) => {
+        setMonths(newMonths);
+        // queryClient.invalidateQueries(['payments']);
     };
 
     return {

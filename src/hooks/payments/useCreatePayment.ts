@@ -17,7 +17,7 @@ export default function useCreatePayment() {
     } = useMutation(
         (payment: CreatePaymentModel) => post('api/payments', payment), {
         onSuccess: () => {
-            queryClient.invalidateQueries(['payments']);
+            queryClient.invalidateQueries();    // invalidate all queries because we don't know the key
         },
     });
 

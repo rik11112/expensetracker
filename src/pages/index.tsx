@@ -11,7 +11,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
     await Promise.all([
         queryClient.prefetchQuery(["categories"], () => prisma.category.findMany()),
-        queryClient.prefetchQuery(["payments"], () => getPaymentsFromMonths(1)),
+        queryClient.prefetchQuery(["payments", 1], () => getPaymentsFromMonths(1)),
     ])
 
     return {

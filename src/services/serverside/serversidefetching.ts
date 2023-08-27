@@ -12,7 +12,6 @@ export async function getPaymentsFromMonths(months: number) {
     } else {
         const limitDate = new Date();
         limitDate.setMonth(limitDate.getMonth() - months);
-        console.log('limitDate', limitDate.toLocaleString())
         whereClause = {
             date: {
                 gte: limitDate,
