@@ -23,7 +23,6 @@ export default function useGetPayments(){
 
     const changeMonths = (months: number) => {
         setMonths(months);
-        console.log('months', months);
         queryClient.invalidateQueries(['payments']);
     };
 

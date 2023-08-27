@@ -29,6 +29,5 @@ export async function getPaymentsFromMonths(months: number) {
         // @ts-ignore
         payment.date = payment.date.toLocaleString('default', { day: '2-digit', month: 'short', year: 'numeric' });
     });
-    console.log('payments', payments)
     return payments;
 }
