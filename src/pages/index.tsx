@@ -3,7 +3,6 @@ import displayPayments from "@src/components/payments/displayPayments"
 import useCreatePaymentButton from "@src/hooks/payments/useCreatePaymentButton"
 import prisma from "@src/lib/prisma"
 import { getPaymentsFromMonths } from "@src/services/serverside/serversidefetching"
-import { getCategories, getPayments } from "@src/services/services"
 import { QueryClient, dehydrate, useQueryClient } from "@tanstack/react-query"
 import { GetServerSidePropsContext } from "next"
 
