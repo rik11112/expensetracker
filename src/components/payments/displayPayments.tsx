@@ -30,10 +30,12 @@ export default function displayPayments() {
             <div
                 style={{ backgroundColor: payment.category.color }}
                 key={payment.paymentId}
-                className={`bar-shadow rounded-md text-3xl my-3 p-3 flex items-center justify-between text-white`}>
-                <span className={`${color} multi-shadow-text`}>{sign}{payment.amount / 100}</span>
-                <span>{payment.date}</span>
-                <span>{payment.note}</span>
+                className={`bar-shadow rounded-md text-3xl my-3 p-3 text-center text-white`}>
+                <div className="flex items-center justify-between">
+                    <span className={`${color} multi-shadow-text`}>{sign}{payment.amount / 100}</span>
+                    <span >{payment.date}</span>
+                </div>
+                {payment.note && <span className="text-lg">{payment.note}</span>}
             </div>
         )
     })
