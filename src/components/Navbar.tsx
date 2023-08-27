@@ -23,6 +23,12 @@ export default function DefaultNavbar({ currentPage }: { currentPage: string }) 
                 >
                     Categories
                 </Navbar.Link>
+                <Navbar.Link
+                    href="/charts"
+                    active={currentPage === 'charts'}
+                >
+                    Charts
+                </Navbar.Link>
             </Navbar.Collapse>
         </Navbar>
     )

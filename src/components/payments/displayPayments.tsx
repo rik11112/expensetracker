@@ -59,5 +59,6 @@ export default function displayPayments() {
         selectMonths,
         paymentList,
         downloadButton,
+        payments,
     }
 }
