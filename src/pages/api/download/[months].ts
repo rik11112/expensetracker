@@ -5,6 +5,7 @@ import { createWriteStream } from "fs";
 import prisma from "@src/lib/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
 import { jsDateToExcelDate } from "@src/util/excelFormatting";
+import ExcelJS from "exceljs";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const months = parseInt(req.query.months as string);
@@ -30,36 +31,42 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
         // Fetch all Payments with their related Categories and sort by date
         const payments = await prisma.payment.findMany({
-            where: whereClause,
             include: {
                 category: true,
             },
             orderBy: {
-                date: "desc", // Change to "desc" for descending order
+                date: "asc", // Change to "desc" for descending order
             },
         });
 
-        payments.forEach(payment => {
-            payment.amount = payment.amount / 100;
+        // Create a new Excel workbook and worksheet
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet("Payments");
+
+        // Define worksheet columns
+        worksheet.columns = [
+            { header: "Date", key: "date", width: 20 },
+            { header: "Amount", key: "amount", width: 15 },
+            { header: "Note", key: "note", width: 30 },
+            { header: "Category", key: "category", width: 20 },
+        ];
+
+        // Add data to the worksheet
+        payments.forEach((payment) => {
+            worksheet.addRow({
+                date: payment.date.toISOString(), // Format the date as needed
+                amount: payment.amount / 100,
+                note: payment.note || "",
+                category: payment.category.name,
+            });
         });
 
-        // Create a CSV stream
-        const csvStream = new Readable({
-            read() {
-                this.push(`date,amount,category,note\n`);
-                for (const payment of payments) {
-                    this.push(`${payment.date},${payment.amount},"${payment.note || ""}",${payment.category.name}\n`);
-                }
-                this.push(null); // End of stream
-            },
-        });
+        // Set the response headers for Excel file download
+        res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        res.setHeader("Content-Disposition", "attachment; filename=payments.xlsx");
 
-        // Set the response headers for CSV download
-        res.setHeader("Content-Type", "text/csv");
-        res.setHeader("Content-Disposition", "attachment; filename=payments.csv");
-
-        // Pipe the CSV stream to the response
-        await pipeline(csvStream, res);
+        // Generate Excel file and send it as a response
+        await workbook.xlsx.write(res);
 
         // Close Prisma client
         await prisma.$disconnect();
