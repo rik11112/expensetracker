@@ -26,6 +26,7 @@ export default function Home() {
         selectMonths,
         paymentList,
         downloadButton,
+        deleteModal,
     } = displayPayments();
 
     const {
@@ -47,5 +48,6 @@ export default function Home() {
                 {downloadButton}
             </div>
         </section>
+        {deleteModal}
     </>
 }
