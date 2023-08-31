@@ -1,4 +1,3 @@
-import prisma from "@src/lib/prisma";
 import { getPaymentsFromMonths } from "@src/services/serverside/serversidefetching";
 import handleErrorResult from "@src/util/serverside/errorresulthandler";
 import { NextApiRequest, NextApiResponse } from "next";
