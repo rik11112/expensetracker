@@ -108,7 +108,7 @@ export default function Home() {
                 data: payments?.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
                     .reduce((acc, payment) => {
                         const date = new Date(payment.date);
-                        const amount = payment.amount / 100;
+                        const amount = payment.amount / 100 + (acc[acc.length - 1]?.[1] || 0);
                         acc.push([date.getTime(), amount]);
                         return acc;
                     }, [] as [number, number][])
