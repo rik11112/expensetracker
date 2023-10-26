@@ -5,6 +5,7 @@ export interface CreatePaymentModel {
     amount: number;
     note?: string;
     categoryId: number;
+    date: Date;
 }
 
 export default function useCreatePayment() {

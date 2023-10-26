@@ -6,7 +6,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     switch (req.method) {
         case 'POST':
-            addPayment(req, res);
+            await addPayment(req, res);
             return;
         default:
             res.status(405).end();
@@ -21,11 +21,13 @@ async function addPayment(req: NextApiRequest, res: NextApiResponse) {
     ])) return;
 
     try {
+        const date = req.body.date ? new Date(req.body.date) : new Date();
         const result = await prisma.payment.create({
             data: {
                 amount: parseInt(req.body.amount),
                 categoryId: parseInt(req.body.categoryId),
                 note: req.body.note,
+                date,
             },
         });
         res.status(200).json(result);

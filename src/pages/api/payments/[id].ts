@@ -6,7 +6,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     switch (req.method) {
         case 'DELETE':
-            deletePayment(req, res);
+            await deletePayment(req, res);
             return;
         default:
             res.status(405).end();

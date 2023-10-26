@@ -89,6 +89,15 @@ export default function useCreatePaymentButton() {
                 </select>
                 <label htmlFor="categoryId">Category</label>
 
+                <div className="my-3">
+                    <input
+                        {...register("date")}
+                        className="rounded-md outline focus:outline-blue mr-3 p-2 text-dark-blue"
+                        placeholder="Date"
+                        type="date" />
+                        <label htmlFor="categoryId">Date (optional)</label>
+                </div>
+
                 <div className="mb-3">
                     <h3 className="mb-2 text-dark-blue">Note</h3>
                     <input
