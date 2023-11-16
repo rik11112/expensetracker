@@ -22,7 +22,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <div className={`${fredoka.variable}`}>
             <QueryClientProvider client={queryClient}>
                 <Hydrate state={pageProps.dehydratedState}>
-                    <Component {...pageProps} />
+                    <>{Component && <Component {...pageProps} />}</>
                 </Hydrate>
                 <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>
