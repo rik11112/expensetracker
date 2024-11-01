@@ -23,6 +23,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     }
 }
 
+function pieChartTooltipFormatter (this: Highcharts.TooltipFormatterContextObject): string {
+    return this.point.name + '<b> € ' + this?.point?.y?.toFixed(2) + ' (' + this?.point?.percentage?.toFixed(1) + '%)</b>';
+}
+
 export default function Home() {
     const {
         selectMonths,
@@ -35,6 +39,24 @@ export default function Home() {
     const expenseCatDistributionOptions = {
         title: {
             text: 'Uitgaven Categorie verdeling'
+        },
+        tooltip: {
+            formatter: pieChartTooltipFormatter,
+        },
+        accessibility: {
+            point: {
+                valueSuffix: '%'
+            }
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: false
+                },
+                showInLegend: true
+            }
         },
         series: [{
             type: 'pie',
@@ -56,6 +78,24 @@ export default function Home() {
     const incomeCatDistributionOptions = {
         title: {
             text: 'Inkomsten Categorie verdeling'
+        },
+        tooltip: {
+            formatter: pieChartTooltipFormatter,
+        },
+        accessibility: {
+            point: {
+                valueSuffix: '%'
+            }
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: false
+                },
+                showInLegend: true
+            }
         },
         series: [{
             type: 'pie',
