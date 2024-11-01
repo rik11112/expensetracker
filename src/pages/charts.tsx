@@ -1,9 +1,8 @@
 import Navbar from "@src/components/Navbar"
 import displayPayments from "@src/components/payments/displayPayments"
-import useCreatePaymentButton from "@src/hooks/payments/useCreatePaymentButton"
 import prisma from "@src/lib/prisma"
 import { getPaymentsFromMonths } from "@src/services/serverside/serversidefetching"
-import { QueryClient, dehydrate, useQueryClient } from "@tanstack/react-query"
+import { QueryClient, dehydrate } from "@tanstack/react-query"
 import { GetServerSidePropsContext } from "next"
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
