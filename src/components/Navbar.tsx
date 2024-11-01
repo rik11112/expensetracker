@@ -8,7 +8,7 @@ export default function DefaultNavbar({ currentPage }: { currentPage: string }) 
             fluid
             rounded
         >
-            Expense Tracker Michiel
+            Expense Tracker {process.env.NEXT_PUBLIC_NAME || 'Michiel'}
             <Navbar.Toggle />
             <Navbar.Collapse>
                 <Navbar.Link
