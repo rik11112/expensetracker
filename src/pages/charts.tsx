@@ -66,12 +66,12 @@ export default function Home() {
                 const index = acc.findIndex((item) => item.name === category);
                 if (amount < 1) return acc;
                 if (index === -1) {
-                    acc.push({ name: category, y: amount })
+                    acc.push({ name: category, y: amount, color: payment.category.color })
                 } else {
                     acc[index].y += amount;
                 }
                 return acc;
-            }, [] as { name: string, y: number }[])
+            }, [] as { name: string, y: number, color: string }[])
         }]
     }
 
@@ -105,12 +105,12 @@ export default function Home() {
                 const index = acc.findIndex((item) => item.name === category);
                 if (amount < 1) return acc;
                 if (index === -1) {
-                    acc.push({ name: category, y: amount })
+                    acc.push({ name: category, y: amount, color: payment.category.color })
                 } else {
                     acc[index].y += amount;
                 }
                 return acc;
-            }, [] as { name: string, y: number }[])
+            }, [] as { name: string, y: number, color: string }[])
         }]
     }
 
