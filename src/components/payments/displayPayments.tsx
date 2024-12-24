@@ -13,6 +13,7 @@ export default function displayPayments() {
         isError,
         isFetching,
         fetchStatus,
+        months: monthsState,
         changeMonths,
     } = useGetPayments();
     const months = useRef<HTMLSelectElement>(null);
@@ -22,7 +23,7 @@ export default function displayPayments() {
     } = useDeletePayment();
 
     const selectMonths = (
-        <select ref={months} className="border border-gray-300 rounded-md p-1" onChange={e => changeMonths(parseInt(e.target.value))}>
+        <select ref={months} value={monthsState} className="border border-gray-300 rounded-md p-1" onChange={e => changeMonths(parseInt(e.target.value))}>
             <option value="1">1 month</option>
             <option value="2">2 months</option>
             <option value="3">3 months</option>

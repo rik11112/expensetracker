@@ -32,6 +32,7 @@ export default function useGetPayments(){
         isError,
         isFetching,
         fetchStatus,
+        months,
         changeMonths,
     };
 }
