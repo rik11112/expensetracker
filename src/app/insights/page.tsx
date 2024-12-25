@@ -1,4 +1,6 @@
+import CatPerMonth from '@src/components/insights/CatPerMonth';
 import SetDateParam from './SetDateParam';
+import prisma from '@src/lib/prisma';
 
 type InsightsPageProps = {
     searchParams: Promise<{
@@ -15,6 +17,18 @@ export default async function InsightsPage({searchParams}: InsightsPageProps) {
     since = new Date(since);
     until = new Date(until);
 
+    const payments = await prisma.payment.findMany({
+        where: {
+            date: {
+                gte: since,
+                lte: until,
+            },
+        },
+        include: {
+            category: true,
+        },
+    });
+
     return (
         <div className="mx-3">
             <h2 className="inline text-blue text-4xl h-6">Charts</h2>
@@ -24,6 +38,8 @@ export default async function InsightsPage({searchParams}: InsightsPageProps) {
             </div>
             <p>Since: {since.toISOString()}</p>
             <p>Until: {until.toISOString()}</p>
+
+            <CatPerMonth payments={payments} />
         </div>
     );
 }
