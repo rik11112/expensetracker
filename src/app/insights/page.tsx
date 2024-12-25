@@ -36,9 +36,7 @@ export default async function InsightsPage({searchParams}: InsightsPageProps) {
                 <SetDateParam name="since" current={since} defaultDate={twoMonthsAgo} />
                 <SetDateParam name="until" current={until} defaultDate={new Date()} />
             </div>
-            <p>Since: {since.toISOString()}</p>
-            <p>Until: {until.toISOString()}</p>
-
+            <br />
             <CatPerMonth payments={payments} />
         </div>
     );
