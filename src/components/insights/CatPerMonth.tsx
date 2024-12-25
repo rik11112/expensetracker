@@ -25,7 +25,7 @@ const formatData = (payments: PaymentWithCategory) => {
         if (!acc[month][payment.category.name]) {
             acc[month][payment.category.name] = 0;
         }
-        acc[month][payment.category.name] += payment.amount;
+        acc[month][payment.category.name] += payment.amount / 100;
         return acc;
     }, {});
 };
@@ -111,7 +111,7 @@ export default function CatPerMonth({ payments }: { payments: PaymentWithCategor
             },
             series: {
                 events: {
-                    legendItemClick: function (event) {
+                    legendItemClick: function () {
                         if (this.name === 'investeringen') {
                             return false; // Disable toggling for 'investeringen'
                         }
