@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { Payment, Category } from '@prisma/client';
+import {Payment, Category} from '@prisma/client';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { useMemo } from 'react';
-import { format } from 'date-fns';
+import {useMemo} from 'react';
+import {format} from 'date-fns';
 
 type PaymentWithCategory = (Payment & {
     category: Category;
-})[]
+})[];
 
 type CategoryData = {
     [key: string]: {
@@ -18,7 +18,7 @@ type CategoryData = {
 
 const formatData = (payments: PaymentWithCategory) => {
     return payments.reduce((acc: CategoryData, payment) => {
-        const month = format(new Date(payment.date), 'MMM yy');
+        const month = format(new Date(payment.date), "MMM ''yy");
         if (!acc[month]) {
             acc[month] = {};
         }
@@ -35,14 +35,14 @@ const getSeriesData = (data: CategoryData, categoryColorMap: CategoryColorMap) =
     const series: Highcharts.SeriesColumnOptions[] = [];
 
     const categoryNames = new Set<string>();
-    categories.forEach(month => {
-        Object.keys(data[month]).forEach(category => {
+    categories.forEach((month) => {
+        Object.keys(data[month]).forEach((category) => {
             categoryNames.add(category);
         });
     });
 
-    categoryNames.forEach(category => {
-        const seriesData = categories.map(month => {
+    categoryNames.forEach((category) => {
+        const seriesData = categories.map((month) => {
             const value = data[month][category] || 0;
             return value < 0 ? -value : 0; // Flip negative values to positive and filter out positive values
         });
@@ -54,7 +54,7 @@ const getSeriesData = (data: CategoryData, categoryColorMap: CategoryColorMap) =
         });
     });
 
-    return { categories, series };
+    return {categories, series};
 };
 
 type CategoryColorMap = {
@@ -62,52 +62,53 @@ type CategoryColorMap = {
 };
 
 const getCategoryColorMap = (payments: PaymentWithCategory) => {
-    const colorMap: { [key: string]: string } = {};
-    payments.forEach(payment => {
+    const colorMap: {[key: string]: string} = {};
+    payments.forEach((payment) => {
         colorMap[payment.category.name] = payment.category.color;
     });
     return colorMap;
-}
+};
 
-export default function CatPerMonth({ payments }: { payments: PaymentWithCategory }) {
+export default function CatPerMonth({payments}: {payments: PaymentWithCategory}) {
     const data = useMemo(() => formatData(payments), [payments]);
     const categoryColorMap = useMemo(() => getCategoryColorMap(payments), [payments]);
-    const { categories, series } = useMemo(() => getSeriesData(data, categoryColorMap), [data, categoryColorMap]);
+    const {categories, series} = useMemo(() => getSeriesData(data, categoryColorMap), [data, categoryColorMap]);
 
     const options: Highcharts.Options = {
         chart: {
-            type: 'column'
+            type: 'column',
         },
         title: {
-            text: 'Monthly Spending by Category'
+            text: 'Monthly Spending by Category',
         },
         subtitle: {
-            text: 'Note: Work in progress'
+            text: 'Note: Work in progress',
         },
         xAxis: {
             categories,
             crosshair: true,
             accessibility: {
-                description: 'Months'
-            }
+                description: 'Months',
+            },
         },
         yAxis: {
             title: {
-                text: 'Amount (€)'
+                text: 'Amount (€)',
             },
             labels: {
                 formatter: function () {
-                    return '€' + this.value;
-                }
-            }
+                    return '€' + parseFloat(this.value.toString()).toFixed(0);
+                },
+            },
         },
         tooltip: {
-            valuePrefix: '€'
+            valuePrefix: '€',
+            valueDecimals: 2,
         },
         plotOptions: {
             column: {
                 pointPadding: 0.2,
-                borderWidth: 0
+                borderWidth: 0,
             },
             series: {
                 events: {
@@ -115,14 +116,14 @@ export default function CatPerMonth({ payments }: { payments: PaymentWithCategor
                         if (this.name === 'investeringen') {
                             return false; // Disable toggling for 'investeringen'
                         }
-                    }
-                }
-            }
+                    },
+                },
+            },
         },
-        series: series.map(s => ({
+        series: series.map((s) => ({
             ...s,
-            visible: s.name !== 'investeringen' // Disable 'investeringen' by default
-        }))
+            visible: s.name !== 'investeringen', // Disable 'investeringen' by default
+        })),
     };
 
     return (
