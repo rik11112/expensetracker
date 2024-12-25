@@ -10,59 +10,6 @@ type PaymentWithCategory = (Payment & {
     category: Category;
 })[]
 
-// export default function CatPerMonth({ payments }: { payments: PaymentWithCategory }) {
-//     const options = {
-//         chart: {
-//             type: 'column'
-//         },
-//         title: {
-//             text: 'Corn vs wheat estimated production for 2023'
-//         },
-//         subtitle: {
-//             text: 'Source: <a target="_blank" href="https://www.indexmundi.com/agriculture/?commodity=corn">indexmundi</a>'
-//         },
-//         xAxis: {
-//             categories: ['USA', 'China', 'Brazil', 'EU', 'Argentina', 'India'],
-//             crosshair: true,
-//             accessibility: {
-//                 description: 'Countries'
-//             }
-//         },
-//         yAxis: {
-//             min: 0,
-//             title: {
-//                 text: '1000 metric tons (MT)'
-//             }
-//         },
-//         tooltip: {
-//             valueSuffix: ' (1000 MT)'
-//         },
-//         plotOptions: {
-//             column: {
-//                 pointPadding: 0.2,
-//                 borderWidth: 0
-//             }
-//         },
-//         series: [
-//             {
-//                 name: 'Corn',
-//                 data: [387749, 280000, 129000, 64300, 54000, 34300]
-//             },
-//             {
-//                 name: 'Wheat',
-//                 data: [45321, 140000, 10000, 140500, 19500, 113500]
-//             }
-//         ]
-//     };
-
-//     return (
-//         <div>
-//             <HighchartsReact highcharts={Highcharts} options={options} />
-//         </div>
-//     );
-// };
-
-
 type CategoryData = {
     [key: string]: {
         [category: string]: number;
@@ -95,7 +42,10 @@ const getSeriesData = (data: CategoryData, categoryColorMap: CategoryColorMap) =
     });
 
     categoryNames.forEach(category => {
-        const seriesData = categories.map(month => data[month][category] || 0);
+        const seriesData = categories.map(month => {
+            const value = data[month][category] || 0;
+            return value < 0 ? -value : 0; // Flip negative values to positive and filter out positive values
+        });
         series.push({
             type: 'column',
             name: category,
@@ -132,7 +82,7 @@ export default function CatPerMonth({ payments }: { payments: PaymentWithCategor
             text: 'Monthly Spending by Category'
         },
         subtitle: {
-            text: 'Source: Your Expense Tracker'
+            text: 'Note: Work in progress'
         },
         xAxis: {
             categories,
@@ -158,9 +108,21 @@ export default function CatPerMonth({ payments }: { payments: PaymentWithCategor
             column: {
                 pointPadding: 0.2,
                 borderWidth: 0
+            },
+            series: {
+                events: {
+                    legendItemClick: function (event) {
+                        if (this.name === 'investeringen') {
+                            return false; // Disable toggling for 'investeringen'
+                        }
+                    }
+                }
             }
         },
-        series
+        series: series.map(s => ({
+            ...s,
+            visible: s.name !== 'investeringen' // Disable 'investeringen' by default
+        }))
     };
 
     return (
