@@ -1,4 +1,4 @@
-import TestAddDateParam from "./TestAddDateParam";
+import SetDateParam from './SetDateParam';
 
 type InsightsPageProps = {
     searchParams: Promise<{
@@ -18,10 +18,12 @@ export default async function InsightsPage({searchParams}: InsightsPageProps) {
     return (
         <div>
             <h1>Insights</h1>
+            <div className="flex gap-3">
+                <SetDateParam name="since" current={since} defaultDate={twoMonthsAgo} />
+                <SetDateParam name="until" current={until} defaultDate={new Date()} />
+            </div>
             <p>Since: {since.toISOString()}</p>
             <p>Until: {until.toISOString()}</p>
-
-            <TestAddDateParam />
         </div>
     );
 }

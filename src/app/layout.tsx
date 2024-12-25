@@ -1,11 +1,8 @@
 import '@styles/globals.scss';
-import type {AppProps} from 'next/app';
 import {config} from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
-import {fredoka} from '@styles/fonts';
-import {Hydrate, QueryClient, QueryClientProvider} from '@tanstack/react-query';
-import {ReactQueryDevtools} from '@tanstack/react-query-devtools';
 import Navbar from '@src/components/Navbar';
+import MuiProvider from './MuiProvider';
 config.autoAddCss = false;
 
 export const metadata = {
@@ -17,8 +14,10 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
     return (
         <html lang="en">
             <body>
-                <Navbar currentPage={''} />
-                <main>{children}</main>
+                <MuiProvider>
+                    <Navbar currentPage={''} />
+                    <main>{children}</main>
+                </MuiProvider>
             </body>
         </html>
     );
