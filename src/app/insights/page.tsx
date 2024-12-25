@@ -16,8 +16,8 @@ export default async function InsightsPage({searchParams}: InsightsPageProps) {
     until = new Date(until);
 
     return (
-        <div>
-            <h1>Insights</h1>
+        <div className="mx-3">
+            <h2 className="inline text-blue text-4xl h-6">Charts</h2>
             <div className="flex gap-3">
                 <SetDateParam name="since" current={since} defaultDate={twoMonthsAgo} />
                 <SetDateParam name="until" current={until} defaultDate={new Date()} />

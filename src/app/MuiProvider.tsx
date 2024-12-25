@@ -8,7 +8,7 @@ export default function MuiProvider({children}: {children: React.ReactNode}) {
     return (
         <html lang="en">
             <body>
-                <AppRouterCacheProvider>
+                <AppRouterCacheProvider options={{ enableCssLayer: false }}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <main>{children}</main>
                     </LocalizationProvider>
