@@ -17,7 +17,21 @@ type CategoryData = {
 };
 
 const formatData = (payments: PaymentWithCategory) => {
-    return payments.reduce((acc: CategoryData, payment) => {
+    /**
+    * Why sort the payments and not the categories?
+    * 
+    * By sorting the payments by date before reducing them, 
+    * we can utilize their conventional date format to sort them chronologically before reducing them into the desired format.
+    * 
+    * It's hard to sort the categories because they are in a weird format that isn't easy to convert to a sortable format.
+    */
+    const sortedPayments = payments.sort((a, b) => {
+        const dateA = new Date(a.date);
+        const dateB = new Date(b.date);
+        return dateA.getTime() - dateB.getTime();
+    });
+
+    return sortedPayments.reduce((acc: CategoryData, payment) => {
         const month = format(new Date(payment.date), "MMM ''yy");
         if (!acc[month]) {
             acc[month] = {};
@@ -71,6 +85,7 @@ const getCategoryColorMap = (payments: PaymentWithCategory) => {
 
 export default function CatPerMonth({payments}: {payments: PaymentWithCategory}) {
     const data = useMemo(() => formatData(payments), [payments]);
+    console.log('data', data);
     const categoryColorMap = useMemo(() => getCategoryColorMap(payments), [payments]);
     const {categories, series} = useMemo(() => getSeriesData(data, categoryColorMap), [data, categoryColorMap]);
 
