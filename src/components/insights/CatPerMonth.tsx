@@ -60,6 +60,11 @@ const getSeriesData = (data: CategoryData, categoryColorMap: CategoryColorMap) =
             const value = data[month][category] || 0;
             return value < 0 ? -value : 0; // Flip negative values to positive and filter out positive values
         });
+
+        if (seriesData.every((value) => value === 0)) {
+            return; // Skip categories that have no values
+        }
+
         series.push({
             type: 'column',
             name: category,
@@ -85,7 +90,6 @@ const getCategoryColorMap = (payments: PaymentWithCategory) => {
 
 export default function CatPerMonth({payments}: {payments: PaymentWithCategory}) {
     const data = useMemo(() => formatData(payments), [payments]);
-    console.log('data', data);
     const categoryColorMap = useMemo(() => getCategoryColorMap(payments), [payments]);
     const {categories, series} = useMemo(() => getSeriesData(data, categoryColorMap), [data, categoryColorMap]);
 
