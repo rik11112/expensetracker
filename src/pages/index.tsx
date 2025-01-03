@@ -1,5 +1,5 @@
 import Navbar from "@src/components/Navbar"
-import displayPayments from "@src/components/payments/displayPayments"
+import useDisplayPayments from "@src/components/payments/displayPayments"
 import useCreatePaymentButton from "@src/hooks/payments/useCreatePaymentButton"
 import prisma from "@src/lib/prisma"
 import { getPaymentsFromMonths } from "@src/services/serverside/serversidefetching"
@@ -27,7 +27,7 @@ export default function Home() {
         paymentList,
         downloadButton,
         deleteModal,
-    } = displayPayments();
+    } = useDisplayPayments();
 
     const {
         createButton,

@@ -6,6 +6,7 @@ import { fredoka } from '@styles/fonts'
 import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import Navbar from '@src/components/Navbar'
+import MonthsProvider from '@src/hooks/payments/MonthsContext'
 
 
 const queryClient = new QueryClient({
@@ -22,7 +23,9 @@ export default function App({ Component, pageProps }: AppProps) {
         <div className={`${fredoka.variable}`}>
             <QueryClientProvider client={queryClient}>
                 <Hydrate state={pageProps.dehydratedState}>
-                    <Component {...pageProps} />
+                    <MonthsProvider>
+                        <Component {...pageProps} />
+                    </MonthsProvider>
                 </Hydrate>
                 <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>

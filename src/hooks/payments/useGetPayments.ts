@@ -2,13 +2,14 @@ import { Category, Payment, Prisma } from "@prisma/client";
 import { getPayments } from "@src/services/services";
 import { get } from "@src/util/request";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
+import { useMonthsContext } from "./MonthsContext";
 
 type PaymentWithCategory = Payment & { category: Category, date: string };
 
 export default function useGetPayments(){
     const queryClient = useQueryClient();
-    const [months, setMonths] = useState<number>(1);
+    const {months} = useMonthsContext();
 
     const {
         isError,
@@ -21,11 +22,6 @@ export default function useGetPayments(){
         queryFn: () => getPayments(months),
     });
 
-    const changeMonths = (newMonths: number) => {
-        setMonths(newMonths);
-        // queryClient.invalidateQueries(['payments']);
-    };
-
     return {
         payments: payments!, // ! because we know it's not undefined because of SSR
         error,
@@ -33,6 +29,5 @@ export default function useGetPayments(){
         isFetching,
         fetchStatus,
         months,
-        changeMonths,
     };
 }

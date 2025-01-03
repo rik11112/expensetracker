@@ -4,9 +4,11 @@ import useDeletePayment from '@src/hooks/payments/useDeletePayment';
 import useGetPayments from '@src/hooks/payments/useGetPayments';
 import {useRef, useState} from 'react';
 import Modal from '@src/components/Modal';
+import { useMonthsContext } from '@src/hooks/payments/MonthsContext';
 
 export default function displayPayments() {
-    const {payments, months: monthsState, changeMonths} = useGetPayments();
+    const {payments, months: monthsState} = useGetPayments();
+    const {setMonths: changeMonths} = useMonthsContext();
     const months = useRef<HTMLSelectElement>(null);
 
     const {deletePayment} = useDeletePayment();
